@@ -65,4 +65,3 @@ jobs:
           git add agentic_state.json
           git diff --cached --quiet || git commit -m "chore: update agentic economy scan state"
           git push
-
