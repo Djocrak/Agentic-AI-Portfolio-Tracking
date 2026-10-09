@@ -1,0 +1,67 @@
+name: Agentic Economy - Core 46 + Free Discovery
+
+on:
+  schedule:
+    # Weekly full report — Monday 08:00 UTC.
+    - cron: "0 8 * * 1"
+    # Daily material-event and new-candidate scan, including weekends for crypto.
+    - cron: "0 20 * * *"
+  workflow_dispatch:
+    inputs:
+      mode:
+        description: "Run type"
+        required: true
+        default: "weekly"
+        type: choice
+        options:
+          - weekly
+          - event
+
+permissions:
+  contents: write
+
+jobs:
+  scan:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+          cache: "pip"
+
+      - name: Install free-source dependencies
+        run: pip install --disable-pip-version-check yfinance requests pandas
+
+      - name: Determine run mode
+        id: mode
+        shell: bash
+        run: |
+          if [ "${{ github.event_name }}" = "workflow_dispatch" ]; then
+            echo "mode=${{ inputs.mode }}" >> "$GITHUB_OUTPUT"
+          elif [ "${{ github.event.schedule }}" = "0 8 * * 1" ]; then
+            echo "mode=weekly" >> "$GITHUB_OUTPUT"
+          else
+            echo "mode=event" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Run core portfolio + free discovery scan
+        run: python snapshot.py --mode "${{ steps.mode.outputs.mode }}"
+        env:
+          EMAIL_PASSWORD: ${{ secrets.EMAIL_PASSWORD }}
+          PORTFOLIO_EMAIL_RECIPIENT: ${{ secrets.PORTFOLIO_EMAIL_RECIPIENT }}
+          PORTFOLIO_EMAIL_SENDER: ${{ secrets.PORTFOLIO_EMAIL_SENDER }}
+          # Optional free credentials; scanner still runs without either secret.
+          SEC_USER_AGENT: ${{ secrets.SEC_USER_AGENT }}
+          COINGECKO_DEMO_API_KEY: ${{ secrets.COINGECKO_DEMO_API_KEY }}
+
+      - name: Persist signal and discovery state
+        run: |
+          git config user.name "agentic-economy-bot"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add agentic_state.json
+          git diff --cached --quiet || git commit -m "chore: update agentic economy scan state"
+          git push
