@@ -509,4 +509,373 @@ def material_events(results, state):
                     f"opportunity {old_opportunity:.0f} → {r['opportunity']}"
                 )
             if large_move:
-           
+                reasons.append(f"move {move:+.1f}% since prior scan")
+            if crossover:
+                reasons.append(", ".join(r["crosses"]))
+
+            priority = (
+                3
+                if r["signal"] in ("STRONG BUY", "THESIS REVIEW")
+                or abs(move) >= move_threshold * 1.5
+                else 2
+            )
+            events.append({
+                "ticker": r["ticker"],
+                "reasons": reasons,
+                "priority": priority,
+            })
+
+    return sorted(events, key=lambda x: x["priority"], reverse=True)
+
+
+def recent_news(tickers):
+    out = []
+
+    for ticker in tickers[:10]:
+        try:
+            items = yf.Ticker(ticker).news or []
+            for item in items[:3]:
+                content = item.get("content", item)
+                title = content.get("title") if isinstance(content, dict) else None
+                if title:
+                    out.append((ticker, title))
+        except Exception:
+            pass
+
+    return out[:20]
+
+
+def html_table(results):
+    rows = []
+
+    for r in results:
+        rows.append(f"""
+        <tr>
+          <td>{html.escape(r["name"])}<br><b>{html.escape(r["ticker"])}</b></td>
+          <td>{html.escape(r["asset_type"])}</td>
+          <td>{html.escape(r["vertical"])}</td>
+          <td>{r["target_weight"]:.2f}%</td>
+          <td>{r["structural"]}</td>
+          <td>{r["tactical"]}</td>
+          <td><b>{r["opportunity"]}</b></td>
+          <td>{SIGNAL_ICON[r["signal"]]} {r["signal"]}</td>
+          <td>{html.escape(r["risk"])}</td>
+          <td>{r["price"]:,.5g}</td>
+          <td>{r["r3"]:+.1f}%</td>
+          <td>{r["rel3"]:+.1f}%</td>
+          <td>{r["rsi"]:.1f}</td>
+          <td>{r["review_level"]:,.5g}</td>
+          <td>{html.escape("; ".join(r["flags"]) or "—")}</td>
+        </tr>""")
+
+    return """<table><thead><tr>
+    <th>Name</th><th>Type</th><th>Vertical</th><th>Target weight</th>
+    <th>Structural</th><th>Tactical</th><th>Opportunity</th><th>Signal</th>
+    <th>Risk</th><th>Price</th><th>3M</th><th>3M vs benchmark</th>
+    <th>RSI</th><th>Review level</th><th>Extension</th>
+    </tr></thead><tbody>""" + "".join(rows) + "</tbody></table>"
+
+
+def send_email(subject, html_body, plain_body):
+    if not EMAIL_PASSWORD:
+        print("[ERROR] EMAIL_PASSWORD is not set; email not sent.")
+        return
+
+    msg = MIMEMultipart("alternative")
+    msg["Subject"] = subject
+    msg["From"] = EMAIL_SENDER
+    msg["To"] = EMAIL_RECIPIENT
+    msg.attach(MIMEText(plain_body, "plain"))
+    msg.attach(MIMEText(html_body, "html"))
+
+    try:
+        with smtplib.SMTP_SSL("smtp.gmail.com", 465, timeout=REQUEST_TIMEOUT) as server:
+            server.login(EMAIL_SENDER, EMAIL_PASSWORD)
+            server.send_message(msg)
+        print(f"[OK] Email sent to {EMAIL_RECIPIENT}")
+    except Exception as exc:
+        # A mail-server issue should be visible in the Actions log.
+        # Do not silently report a successful email.
+        print(f"[ERROR] Email delivery failed: {exc}")
+
+
+def weekly_report(results, discovery=None):
+    now = datetime.now(timezone.utc).strftime("%Y-%m-%d %H:%M UTC")
+    buys = [
+        r for r in results
+        if r["signal"] in ("STRONG BUY", "BUY", "BUY ON PULLBACK")
+    ]
+    reviews = [r for r in results if r["signal"] == "THESIS REVIEW"]
+    top = results[:10]
+
+    action_lines = []
+
+    for r in buys[:8]:
+        action = (
+            "Wait for a pullback/reset before adding."
+            if r["signal"] == "BUY ON PULLBACK"
+            else (
+                f"Review the position against its "
+                f"{r['target_weight']:.2f}% target weight."
+            )
+        )
+        action_lines.append(
+            f"<li><b>{html.escape(r['ticker'])}</b>: {r['signal']} — "
+            f"{action}</li>"
+        )
+
+    for r in reviews[:5]:
+        action_lines.append(
+            f"<li><b>{html.escape(r['ticker'])}</b>: "
+            "<b>THESIS REVIEW</b> — reassess thesis, trend and position size.</li>"
+        )
+
+    discovery = discovery or {}
+    discovery_candidates = discovery.get("candidates", [])
+    source_health = html.escape(str(discovery.get("sources", {})))
+    discovery_counts = html.escape(str(discovery.get("counts", {})))
+
+    html_body = f"""<html><head><style>
+    body{{font-family:Arial,sans-serif;color:#222;line-height:1.4}}
+    table{{border-collapse:collapse;width:100%;font-size:12px}}
+    th{{background:#18202b;color:#fff;padding:6px;text-align:left}}
+    td{{border-bottom:1px solid #ddd;padding:6px;vertical-align:top}}
+    .box{{background:#f4f7fb;border:1px solid #ccd6e0;padding:12px;border-radius:6px}}
+    </style></head><body>
+    <h1>🤖 Agentic Economy 46 — Weekly Signal</h1>
+    <p><b>{now}</b> · Target allocation: <b>{EQUITY_ALLOCATION:.1f}% equities</b>
+    and <b>{CRYPTO_ALLOCATION:.1f}% crypto</b>.</p>
+    <div class="box"><b>Scoring:</b> Structural thesis 60% + tactical timing 40%.
+    Equity target weights are proportional to structural scores. Crypto target
+    weights are equal within the crypto allocation. Risk is reported separately.
+    Target weights are references, not automatic trade instructions.</div>
+    <h2>Action plan</h2>
+    <ul>{''.join(action_lines) or '<li>No new action.</li>'}</ul>
+    <h2>Top opportunities</h2>
+    <ul>{''.join(
+        f"<li><b>{html.escape(r['ticker'])}</b>: {r['signal']} — "
+        f"Opportunity {r['opportunity']}/100; Structural {r['structural']}; "
+        f"Tactical {r['tactical']}; Target weight {r['target_weight']:.2f}%</li>"
+        for r in top
+    )}</ul>
+    <h2>Free-source market discovery</h2>
+    <p>New candidates are research leads, not automatic holdings or buy
+    recommendations. Discovery sources include SEC EDGAR, CoinGecko free API,
+    DefiLlama public data and GDELT public news. Source failures and missing
+    data are disclosed.</p>
+    {candidate_html(discovery_candidates, 15)}
+    <p><b>Source health:</b> {source_health}.
+    Candidate count: {discovery_counts}.</p>
+    <h2>Portfolio allocation and signal matrix</h2>
+    {html_table(results)}
+    <p><small>Review levels are mechanical risk-review levels, not guaranteed
+    execution prices. Discovery scores are prioritisation heuristics, not buy
+    signals.</small></p>
+    </body></html>"""
+
+    plain = (
+        f"Agentic Economy 46 — Weekly Signal — {now}\n"
+        f"Allocation: {EQUITY_ALLOCATION:.1f}% equities / "
+        f"{CRYPTO_ALLOCATION:.1f}% crypto\n"
+        "Equities are weighted by structural score; crypto is equally weighted.\n\n"
+        "ACTION PLAN\n"
+    )
+    plain += "\n".join(
+        f"- {r['ticker']}: {r['signal']} | Target {r['target_weight']:.2f}% | "
+        f"Opp {r['opportunity']} | Structural {r['structural']} | "
+        f"Tactical {r['tactical']}"
+        for r in buys[:10]
+    )
+    plain += "\n\nTHESIS REVIEWS\n" + "\n".join(
+        f"- {r['ticker']}" for r in reviews[:5]
+    )
+    plain += (
+        "\n\nFREE-SOURCE MARKET DISCOVERY\n"
+        + candidate_plain(discovery_candidates, 15)
+    )
+    plain += "\n\nSource health: " + str(discovery.get("sources", {}))
+
+    send_email(
+        f"🤖 Agentic Economy 46 — Weekly Signal — {datetime.now().strftime('%d %b %Y')}",
+        html_body,
+        plain,
+    )
+
+
+def event_report(results, events, new_candidates=None):
+    new_candidates = new_candidates or []
+
+    if not events and not new_candidates:
+        print("[INFO] No material market or discovery event — no email.")
+        return
+
+    tickers = [event["ticker"] for event in events]
+    news = recent_news(tickers)
+    bullets = ""
+
+    for event in events:
+        result = next(
+            (item for item in results if item["ticker"] == event["ticker"]),
+            None,
+        )
+        if result is None:
+            continue
+
+        bullets += (
+            f"<li><b>{html.escape(result['ticker'])}</b> — {result['signal']} — "
+            f"Opportunity {result['opportunity']}/100 — "
+            f"Target weight {result['target_weight']:.2f}% — "
+            f"{html.escape('; '.join(event['reasons']))}</li>"
+        )
+
+    news_html = (
+        "<ul>" + "".join(
+            f"<li><b>{html.escape(ticker)}</b>: {html.escape(title)}</li>"
+            for ticker, title in news
+        ) + "</ul>"
+        if news
+        else "<p>No additional headline context retrieved.</p>"
+    )
+
+    discovery_html = (
+        candidate_html(new_candidates, 10)
+        if new_candidates
+        else "<p>No new candidate nominations.</p>"
+    )
+
+    html_body = f"""<html><body style="font-family:Arial,sans-serif;line-height:1.4">
+    <h1>🚨 Agentic Economy 46 — Material Alert</h1>
+    <p>Only material changes are emailed; unchanged signals are suppressed.</p>
+    <h2>Triggers</h2><ul>{bullets}</ul>
+    <h2>Action plan</h2>
+    <ul>
+      <li><b>STRONG BUY / BUY:</b> review the current holding against its
+      asset-specific target weight; avoid chasing severe extensions.</li>
+      <li><b>BUY ON PULLBACK:</b> thesis remains strong; wait for a technical
+      reset/reclaim rather than chasing the price.</li>
+      <li><b>REDUCE:</b> review position size against its target and reassess
+      risk; do not automatically abandon the thesis.</li>
+      <li><b>THESIS REVIEW:</b> reassess fundamentals, thesis and trend before
+      deciding.</li>
+    </ul>
+    <h2>Headline context</h2>{news_html}
+    <h2>New free-source discovery candidates</h2>{discovery_html}
+    <p>Discovery candidates require source verification and fundamental/valuation
+    review before any portfolio decision.</p>
+    </body></html>"""
+
+    plain = "Agentic Economy 46 — MATERIAL ALERT\n\n"
+
+    for event in events:
+        result = next(
+            (item for item in results if item["ticker"] == event["ticker"]),
+            None,
+        )
+        if result:
+            plain += (
+                f"{result['ticker']} — {result['signal']} — "
+                f"Opp {result['opportunity']} — "
+                f"Target {result['target_weight']:.2f}%\n"
+                f"  {'; '.join(event['reasons'])}\n"
+            )
+
+    plain += (
+        "\nNEW DISCOVERY CANDIDATES\n"
+        + candidate_plain(new_candidates, 10)
+    )
+
+    send_email(
+        f"🚨 Agentic Economy 46 — Material Alert — "
+        f"{datetime.now().strftime('%d %b %Y %H:%M UTC')}",
+        html_body,
+        plain,
+    )
+
+
+def update_state(results, state):
+    state["assets"] = {
+        r["ticker"]: {
+            "price": r["price"],
+            "signal": r["signal"],
+            "opportunity": r["opportunity"],
+            "structural": r["structural"],
+            "tactical": r["tactical"],
+            "r3": r["r3"],
+            "target_weight": r["target_weight"],
+            "timestamp": datetime.now(timezone.utc).isoformat(),
+        }
+        for r in results
+    }
+    return state
+
+
+def main(mode="weekly"):
+    print(f"[INFO] Agentic Economy 46 — {mode}")
+    print(
+        f"[INFO] Target allocation: {EQUITY_ALLOCATION:.1f}% equities / "
+        f"{CRYPTO_ALLOCATION:.1f}% crypto"
+    )
+
+    results = score_all()
+    if not results:
+        raise SystemExit("No core market data returned.")
+
+    state = load_state()
+
+    # Free-only discovery runs alongside the core scan. Failures in public
+    # sources should be contained inside the discovery module.
+    discovery = discover_free_candidates(
+        core_tickers=set(META),
+        max_output=50,
+    )
+
+    previous_seen = set(state.get("discovery_seen", []))
+    discovered = discovery.get("candidates", [])
+    new_candidates = [
+        candidate
+        for candidate in discovered
+        if candidate.get("ticker") not in previous_seen
+        and (
+            int(candidate.get("structural") or 0) >= 78
+            or bool(candidate.get("news_title"))
+        )
+    ]
+
+    if mode == "weekly":
+        weekly_report(results, discovery)
+        state = update_state(results, state)
+        state["last_weekly"] = datetime.now(timezone.utc).isoformat()
+    else:
+        events = material_events(results, state)
+        event_report(results, events, new_candidates[:10])
+        state = update_state(results, state)
+
+    # Remember seen discovery tickers to suppress repeated alerts.
+    seen_now = [
+        candidate.get("ticker")
+        for candidate in discovered
+        if candidate.get("ticker")
+    ]
+    state["discovery_seen"] = list(
+        dict.fromkeys(seen_now + list(previous_seen))
+    )[:2000]
+    state["discovery_sources"] = discovery.get("sources", {})
+    state["last_discovery_scan"] = datetime.now(timezone.utc).isoformat()
+
+    save_state(state)
+    print(
+        f"[OK] scored {len(results)}/{len(PORTFOLIO)} core assets; "
+        f"discovered {len(discovered)} candidates"
+    )
+
+
+if __name__ == "__main__":
+    import argparse
+
+    parser = argparse.ArgumentParser()
+    parser.add_argument(
+        "--mode",
+        choices=["weekly", "event"],
+        default="weekly",
+    )
+    main(parser.parse_args().mode)
