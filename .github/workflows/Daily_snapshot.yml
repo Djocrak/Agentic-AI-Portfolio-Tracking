@@ -4,7 +4,7 @@ on:
   schedule:
     # Weekly full report — Monday 08:00 UTC.
     - cron: "0 8 * * 1"
-    # Daily material-event and new-candidate scan, including weekends for crypto.
+    # Daily material-event and new-candidate scan, including weekends.
     - cron: "0 20 * * *"
   workflow_dispatch:
     inputs:
@@ -23,7 +23,8 @@ permissions:
 jobs:
   scan:
     runs-on: ubuntu-latest
-    timeout-minutes: 15
+    timeout-minutes: 20
+
     steps:
       - uses: actions/checkout@v4
 
@@ -54,11 +55,20 @@ jobs:
           EMAIL_PASSWORD: ${{ secrets.EMAIL_PASSWORD }}
           PORTFOLIO_EMAIL_RECIPIENT: ${{ secrets.PORTFOLIO_EMAIL_RECIPIENT }}
           PORTFOLIO_EMAIL_SENDER: ${{ secrets.PORTFOLIO_EMAIL_SENDER }}
-          # Optional free credentials; scanner still runs without either secret.
           SEC_USER_AGENT: ${{ secrets.SEC_USER_AGENT }}
           COINGECKO_DEMO_API_KEY: ${{ secrets.COINGECKO_DEMO_API_KEY }}
 
+      - name: Upload scan reports
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: agentic-economy-reports-${{ github.run_number }}
+          path: reports/
+          if-no-files-found: warn
+          retention-days: 30
+
       - name: Persist signal and discovery state
+        if: success()
         run: |
           git config user.name "agentic-economy-bot"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
