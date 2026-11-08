@@ -8,7 +8,7 @@
       "structural": 91,
       "tactical": 10,
       "target_weight": 2.145503536544291,
-      "timestamp": "2026-11-07T23:33:43.275441+00:00"
+      "timestamp": "2026-11-08T23:33:55.024618+00:00"
     },
     "AAPL": {
       "opportunity": 83,
@@ -18,17 +18,17 @@
       "structural": 93,
       "tactical": 67,
       "target_weight": 2.1926574604243854,
-      "timestamp": "2026-11-07T23:33:43.275348+00:00"
+      "timestamp": "2026-11-08T23:33:55.024517+00:00"
     },
     "AKT-USD": {
-      "opportunity": 66,
-      "price": 0.6376000046730042,
-      "r3": 11.056153099779253,
-      "signal": "REDUCE",
+      "opportunity": 59,
+      "price": 0.6043999791145325,
+      "r3": 9.377033598210982,
+      "signal": "THESIS REVIEW",
       "structural": 81,
-      "tactical": 44,
+      "tactical": 26,
       "target_weight": 2.3076923076923075,
-      "timestamp": "2026-11-07T23:33:43.275405+00:00"
+      "timestamp": "2026-11-08T23:33:55.024626+00:00"
     },
     "AMD": {
       "opportunity": 59,
@@ -38,7 +38,7 @@
       "structural": 88,
       "tactical": 16,
       "target_weight": 2.0747726507241495,
-      "timestamp": "2026-11-07T23:33:43.275444+00:00"
+      "timestamp": "2026-11-08T23:33:55.024622+00:00"
     },
     "AMZN": {
       "opportunity": 74,
@@ -48,7 +48,7 @@
       "structural": 93,
       "tactical": 45,
       "target_weight": 2.1926574604243854,
-      "timestamp": "2026-11-07T23:33:43.275378+00:00"
+      "timestamp": "2026-11-08T23:33:55.024545+00:00"
     },
     "ANET": {
       "opportunity": 66,
@@ -58,7 +58,7 @@
       "structural": 92,
       "tactical": 26,
       "target_weight": 2.1690804984843384,
-      "timestamp": "2026-11-07T23:33:43.275400+00:00"
+      "timestamp": "2026-11-08T23:33:55.024572+00:00"
     },
     "ARB-USD": {
       "opportunity": 64,
@@ -68,7 +68,7 @@
       "structural": 82,
       "tactical": 37,
       "target_weight": 2.3076923076923075,
-      "timestamp": "2026-11-07T23:33:43.275419+00:00"
+      "timestamp": "2026-11-08T23:33:55.024590+00:00"
     },
     "ARM": {
       "opportunity": 53,
@@ -78,17 +78,17 @@
       "structural": 87,
       "tactical": 3,
       "target_weight": 2.0511956887841025,
-      "timestamp": "2026-11-07T23:33:43.275486+00:00"
+      "timestamp": "2026-11-08T23:33:55.024681+00:00"
     },
     "AVAX-USD": {
-      "opportunity": 61,
-      "price": 8.206999778747559,
-      "r3": 3.782618154734063,
-      "signal": "REDUCE",
+      "opportunity": 55,
+      "price": 8.027000427246094,
+      "r3": -0.7370787152894853,
+      "signal": "THESIS REVIEW",
       "structural": 83,
-      "tactical": 29,
+      "tactical": 14,
       "target_weight": 2.3076923076923075,
-      "timestamp": "2026-11-07T23:33:43.275432+00:00"
+      "timestamp": "2026-11-08T23:33:55.024674+00:00"
     },
     "AVGO": {
       "opportunity": 57,
@@ -98,17 +98,17 @@
       "structural": 95,
       "tactical": 0,
       "target_weight": 2.23981138430448,
-      "timestamp": "2026-11-07T23:33:43.275452+00:00"
+      "timestamp": "2026-11-08T23:33:55.024636+00:00"
     },
     "BTC-USD": {
       "opportunity": 66,
-      "price": 75717.7265625,
-      "r3": -5.765174374703808,
+      "price": 75239.3515625,
+      "r3": -4.899776623067298,
       "signal": "REDUCE",
       "structural": 99,
       "tactical": 16,
       "target_weight": 2.3076923076923075,
-      "timestamp": "2026-11-07T23:33:43.275397+00:00"
+      "timestamp": "2026-11-08T23:33:55.024568+00:00"
     },
     "CEG": {
       "opportunity": 56,
@@ -118,7 +118,7 @@
       "structural": 87,
       "tactical": 10,
       "target_weight": 2.0511956887841025,
-      "timestamp": "2026-11-07T23:33:43.275469+00:00"
+      "timestamp": "2026-11-08T23:33:55.024659+00:00"
     },
     "COIN": {
       "opportunity": 55,
@@ -128,7 +128,7 @@
       "structural": 91,
       "tactical": 0,
       "target_weight": 2.145503536544291,
-      "timestamp": "2026-11-07T23:33:43.275476+00:00"
+      "timestamp": "2026-11-08T23:33:55.024668+00:00"
     },
     "CRCL": {
       "opportunity": 55,
@@ -138,7 +138,7 @@
       "structural": 92,
       "tactical": 0,
       "target_weight": 2.1690804984843384,
-      "timestamp": "2026-11-07T23:33:43.275474+00:00"
+      "timestamp": "2026-11-08T23:33:55.024665+00:00"
     },
     "CRM": {
       "opportunity": 64,
@@ -148,7 +148,7 @@
       "structural": 84,
       "tactical": 34,
       "target_weight": 1.9804648029639609,
-      "timestamp": "2026-11-07T23:33:43.275416+00:00"
+      "timestamp": "2026-11-08T23:33:55.024587+00:00"
     },
     "CRWD": {
       "opportunity": 67,
@@ -158,7 +158,7 @@
       "structural": 91,
       "tactical": 30,
       "target_weight": 2.145503536544291,
-      "timestamp": "2026-11-07T23:33:43.275392+00:00"
+      "timestamp": "2026-11-08T23:33:55.024562+00:00"
     },
     "EQIX": {
       "opportunity": 68,
@@ -168,17 +168,17 @@
       "structural": 84,
       "tactical": 45,
       "target_weight": 1.9804648029639609,
-      "timestamp": "2026-11-07T23:33:43.275381+00:00"
+      "timestamp": "2026-11-08T23:33:55.024550+00:00"
     },
     "ETH-USD": {
-      "opportunity": 64,
-      "price": 2232.909912109375,
-      "r3": -11.200375704202647,
-      "signal": "REDUCE",
+      "opportunity": 61,
+      "price": 2148.360107421875,
+      "r3": -13.75366021089558,
+      "signal": "THESIS REVIEW",
       "structural": 96,
-      "tactical": 16,
+      "tactical": 8,
       "target_weight": 2.3076923076923075,
-      "timestamp": "2026-11-07T23:33:43.275412+00:00"
+      "timestamp": "2026-11-08T23:33:55.024604+00:00"
     },
     "ETN": {
       "opportunity": 57,
@@ -188,17 +188,17 @@
       "structural": 90,
       "tactical": 8,
       "target_weight": 2.121926574604244,
-      "timestamp": "2026-11-07T23:33:43.275460+00:00"
+      "timestamp": "2026-11-08T23:33:55.024646+00:00"
     },
     "FIL-USD": {
-      "opportunity": 50,
-      "price": 0.786899983882904,
-      "r3": -2.476328775700354,
+      "opportunity": 48,
+      "price": 0.7501999735832214,
+      "r3": -10.36394698780182,
       "signal": "THESIS REVIEW",
       "structural": 78,
-      "tactical": 9,
+      "tactical": 3,
       "target_weight": 2.3076923076923075,
-      "timestamp": "2026-11-07T23:33:43.275492+00:00"
+      "timestamp": "2026-11-08T23:33:55.024687+00:00"
     },
     "GEV": {
       "opportunity": 57,
@@ -208,7 +208,7 @@
       "structural": 91,
       "tactical": 5,
       "target_weight": 2.145503536544291,
-      "timestamp": "2026-11-07T23:33:43.275458+00:00"
+      "timestamp": "2026-11-08T23:33:55.024643+00:00"
     },
     "GOOGL": {
       "opportunity": 58,
@@ -218,7 +218,7 @@
       "structural": 94,
       "tactical": 5,
       "target_weight": 2.2162344223644324,
-      "timestamp": "2026-11-07T23:33:43.275447+00:00"
+      "timestamp": "2026-11-08T23:33:55.024629+00:00"
     },
     "HOOD": {
       "opportunity": 57,
@@ -228,17 +228,17 @@
       "structural": 90,
       "tactical": 8,
       "target_weight": 2.121926574604244,
-      "timestamp": "2026-11-07T23:33:43.275463+00:00"
+      "timestamp": "2026-11-08T23:33:55.024650+00:00"
     },
     "LINK-USD": {
       "opportunity": 63,
-      "price": 10.800000190734863,
-      "r3": -18.329134865647834,
+      "price": 10.5,
+      "r3": -17.696344941262655,
       "signal": "REDUCE",
       "structural": 91,
       "tactical": 21,
       "target_weight": 2.3076923076923075,
-      "timestamp": "2026-11-07T23:33:43.275424+00:00"
+      "timestamp": "2026-11-08T23:33:55.024594+00:00"
     },
     "META": {
       "opportunity": 67,
@@ -248,7 +248,7 @@
       "structural": 94,
       "tactical": 26,
       "target_weight": 2.2162344223644324,
-      "timestamp": "2026-11-07T23:33:43.275388+00:00"
+      "timestamp": "2026-11-08T23:33:55.024558+00:00"
     },
     "MRVL": {
       "opportunity": 54,
@@ -258,7 +258,7 @@
       "structural": 86,
       "tactical": 5,
       "target_weight": 2.027618726844055,
-      "timestamp": "2026-11-07T23:33:43.275482+00:00"
+      "timestamp": "2026-11-08T23:33:55.024677+00:00"
     },
     "MSFT": {
       "opportunity": 80,
@@ -268,7 +268,7 @@
       "structural": 96,
       "tactical": 55,
       "target_weight": 2.263388346244527,
-      "timestamp": "2026-11-07T23:33:43.275374+00:00"
+      "timestamp": "2026-11-08T23:33:55.024540+00:00"
     },
     "MU": {
       "opportunity": 58,
@@ -278,7 +278,7 @@
       "structural": 92,
       "tactical": 8,
       "target_weight": 2.1690804984843384,
-      "timestamp": "2026-11-07T23:33:43.275450+00:00"
+      "timestamp": "2026-11-08T23:33:55.024633+00:00"
     },
     "NET": {
       "opportunity": 65,
@@ -288,7 +288,7 @@
       "structural": 91,
       "tactical": 26,
       "target_weight": 2.145503536544291,
-      "timestamp": "2026-11-07T23:33:43.275409+00:00"
+      "timestamp": "2026-11-08T23:33:55.024579+00:00"
     },
     "NOW": {
       "opportunity": 60,
@@ -298,7 +298,7 @@
       "structural": 91,
       "tactical": 13,
       "target_weight": 2.145503536544291,
-      "timestamp": "2026-11-07T23:33:43.275438+00:00"
+      "timestamp": "2026-11-08T23:33:55.024615+00:00"
     },
     "NVDA": {
       "opportunity": 61,
@@ -308,7 +308,7 @@
       "structural": 97,
       "tactical": 8,
       "target_weight": 2.2869653081845738,
-      "timestamp": "2026-11-07T23:33:43.275430+00:00"
+      "timestamp": "2026-11-08T23:33:55.024601+00:00"
     },
     "OKTA": {
       "opportunity": 68,
@@ -318,27 +318,27 @@
       "structural": 82,
       "tactical": 47,
       "target_weight": 1.9333108790838667,
-      "timestamp": "2026-11-07T23:33:43.275384+00:00"
+      "timestamp": "2026-11-08T23:33:55.024554+00:00"
     },
     "ONDO-USD": {
       "opportunity": 55,
-      "price": 0.36243000626564026,
-      "r3": -6.2274371153928865,
+      "price": 0.3555600047111511,
+      "r3": -7.409626978561423,
       "signal": "THESIS REVIEW",
       "structural": 87,
       "tactical": 8,
       "target_weight": 2.3076923076923075,
-      "timestamp": "2026-11-07T23:33:43.275479+00:00"
+      "timestamp": "2026-11-08T23:33:55.024671+00:00"
     },
     "OP-USD": {
       "opportunity": 51,
-      "price": 0.10168000310659409,
-      "r3": -7.565317203707156,
+      "price": 0.09843999892473221,
+      "r3": -10.918863603387951,
       "signal": "THESIS REVIEW",
       "structural": 80,
       "tactical": 8,
       "target_weight": 2.3076923076923075,
-      "timestamp": "2026-11-07T23:33:43.275489+00:00"
+      "timestamp": "2026-11-08T23:33:55.024684+00:00"
     },
     "PANW": {
       "opportunity": 62,
@@ -348,7 +348,7 @@
       "structural": 92,
       "tactical": 16,
       "target_weight": 2.1690804984843384,
-      "timestamp": "2026-11-07T23:33:43.275427+00:00"
+      "timestamp": "2026-11-08T23:33:55.024597+00:00"
     },
     "PLTR": {
       "opportunity": 64,
@@ -358,7 +358,7 @@
       "structural": 91,
       "tactical": 24,
       "target_weight": 2.145503536544291,
-      "timestamp": "2026-11-07T23:33:43.275414+00:00"
+      "timestamp": "2026-11-08T23:33:55.024583+00:00"
     },
     "PWR": {
       "opportunity": 56,
@@ -368,17 +368,17 @@
       "structural": 86,
       "tactical": 10,
       "target_weight": 2.027618726844055,
-      "timestamp": "2026-11-07T23:33:43.275471+00:00"
+      "timestamp": "2026-11-08T23:33:55.024662+00:00"
     },
     "RENDER-USD": {
-      "opportunity": 54,
-      "price": 1.5509999990463257,
-      "r3": -0.6223471820265614,
+      "opportunity": 57,
+      "price": 1.5498000383377075,
+      "r3": 0.230819770612678,
       "signal": "THESIS REVIEW",
       "structural": 84,
-      "tactical": 9,
+      "tactical": 16,
       "target_weight": 2.3076923076923075,
-      "timestamp": "2026-11-07T23:33:43.275484+00:00"
+      "timestamp": "2026-11-08T23:33:55.024653+00:00"
     },
     "SIEGY": {
       "opportunity": 57,
@@ -388,17 +388,17 @@
       "structural": 83,
       "tactical": 18,
       "target_weight": 1.9568878410239137,
-      "timestamp": "2026-11-07T23:33:43.275466+00:00"
+      "timestamp": "2026-11-08T23:33:55.024656+00:00"
     },
     "SOL-USD": {
-      "opportunity": 63,
-      "price": 89.37000274658203,
-      "r3": -16.043221248619588,
-      "signal": "REDUCE",
+      "opportunity": 60,
+      "price": 87.33000183105469,
+      "r3": -15.920700487110473,
+      "signal": "THESIS REVIEW",
       "structural": 94,
-      "tactical": 16,
+      "tactical": 8,
       "target_weight": 2.3076923076923075,
-      "timestamp": "2026-11-07T23:33:43.275421+00:00"
+      "timestamp": "2026-11-08T23:33:55.024611+00:00"
     },
     "TSLA": {
       "opportunity": 66,
@@ -408,7 +408,7 @@
       "structural": 86,
       "tactical": 36,
       "target_weight": 2.027618726844055,
-      "timestamp": "2026-11-07T23:33:43.275402+00:00"
+      "timestamp": "2026-11-08T23:33:55.024576+00:00"
     },
     "TSM": {
       "opportunity": 60,
@@ -418,7 +418,7 @@
       "structural": 94,
       "tactical": 8,
       "target_weight": 2.2162344223644324,
-      "timestamp": "2026-11-07T23:33:43.275435+00:00"
+      "timestamp": "2026-11-08T23:33:55.024608+00:00"
     },
     "VRT": {
       "opportunity": 57,
@@ -428,7 +428,7 @@
       "structural": 91,
       "tactical": 7,
       "target_weight": 2.145503536544291,
-      "timestamp": "2026-11-07T23:33:43.275455+00:00"
+      "timestamp": "2026-11-08T23:33:55.024640+00:00"
     }
   },
   "discovery_seen": [
@@ -482,38 +482,38 @@
     "AIO",
     "VLN",
     "TIGR",
-    "ROK",
-    "RIOT",
-    "SYM",
-    "SYRUP (protocol)",
-    "W (protocol)",
-    "XVS (protocol)",
-    "JUP (protocol)",
-    "RAY (protocol)",
-    "POL (protocol)",
-    "DDOG",
-    "COMP (protocol)",
-    "ABBNY",
-    "SNOW",
-    "KMNO (protocol)",
-    "HYPE (protocol)",
-    "CAKE (protocol)",
-    "JST (protocol)",
-    "SKY (protocol)",
-    "UCAR",
-    "AAVE (protocol)",
-    "CRV (protocol)",
-    "UNI (protocol)",
-    "BNB-USD",
-    "ASML",
-    "INTC",
-    "ABLZF",
-    "FTNT",
-    "ZRO (protocol)",
     "GREEL",
-    "MORPHO (protocol)",
+    "UCAR",
+    "ROK",
+    "FTNT",
+    "CAKE (protocol)",
+    "XVS (protocol)",
+    "ZRO (protocol)",
+    "COMP (protocol)",
+    "UNI (protocol)",
+    "RIOT",
+    "HPE",
+    "ASML",
+    "JUP (protocol)",
+    "SYM",
+    "SKY (protocol)",
+    "SYRUP (protocol)",
+    "KMNO (protocol)",
+    "CRV (protocol)",
+    "HYPE (protocol)",
+    "RAY (protocol)",
+    "BNB-USD",
+    "POL (protocol)",
+    "AAVE (protocol)",
+    "W (protocol)",
+    "DDOG",
+    "ABBNY",
+    "JST (protocol)",
+    "SNOW",
+    "ABLZF",
     "TER",
-    "HPE"
+    "MORPHO (protocol)",
+    "INTC"
   ],
   "discovery_sources": {
     "coingecko": true,
@@ -521,6 +521,6 @@
     "gdelt": false,
     "sec_issuer_list": true
   },
-  "last_discovery_scan": "2026-11-07T23:33:43.275565+00:00",
+  "last_discovery_scan": "2026-11-08T23:33:55.024751+00:00",
   "last_weekly": "2026-11-02T17:35:31.877679+00:00"
 }
